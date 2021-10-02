@@ -1,10 +1,9 @@
 #!/bin/bash
 
-
 if [ "`which docker`" == "" ]
 then
   echo -n "Do you want to install docker? [y/n]: "
-  read $ANS
+  read ANS
   if [ "$ANS" == "y" ]
   then
     sudo apt -y install apt-transport-https ca-certificates curl software-properties-common
@@ -55,8 +54,8 @@ EOF'
 sudo docker exec -it $CNAME apt update
 sudo docker exec -it $CNAME apt-file update
 sudo docker exec -it $CNAME bash -c 'yes | unminimize'
-sudo docker exec -it $CNAME apt -y install tmux vim iproute2 iputils-ping curl nmap tcpdump apt-file w3m x11-apps systemd man openssh-server openssh-client telnetd quagga apache2 dsniff isc-dhcp-server
-sudo docker exec -it $CNAME bash -c 'echo no | apt -y install wireshark'
-sudo docker exec $CNAME bash -c 'for FILE in `ls /usr/share/doc/quagga-core/examples/*.sample`; do echo $FILE - /etc/quagga/$(basename -s .sample $FILE); done'
+sudo docker exec -it $CNAME apt -y install tmux vim iproute2 iputils-ping curl nmap telnet tcpdump apt-file w3m x11-apps systemd man openssh-server openssh-client telnetd quagga apache2 dsniff isc-dhcp-server
+sudo docker exec -it $CNAME bash -c 'yes no | apt -y install wireshark'
+sudo docker exec $CNAME bash -c 'for FILE in `ls /usr/share/doc/quagga-core/examples/*.sample`; do cp $FILE /etc/quagga/$(basename -s .sample $FILE); done'
 sudo docker commit $CNAME $IMAGENAME
 sudo docker rm -f `sudo docker ps -aq`
