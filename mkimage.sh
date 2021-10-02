@@ -1,6 +1,27 @@
 #!/bin/bash
 
-IMAGENAME=com
+
+if [ "`which docker`" == "" ]
+then
+  echo -n "Do you want to install docker? [y/n]: "
+  read $ANS
+  if [ "$ANS" == "y" ]
+  then
+    sudo apt -y install apt-transport-https ca-certificates curl software-properties-common
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+    sudo apt -y install docker-ce
+  else
+    echo "Install Canceled."
+  fi
+fi
+
+
+IMAGENAME=node
+if [ "$1" != "" ]
+then
+  IMAGENAME=$1
+fi
 
 #cat << EOF > /dev/null
 EXISTIMAGE=$(sudo docker images $IMAGENAME | grep -v "REPOSITORY")
