@@ -9,6 +9,12 @@ fi
 INAME=$1
 CNAME=$2
 
+if [ "`ip netns | grep -w ${CNAME}`" != "" ]
+then
+  echo "Network netspace \"${CNAME}\" already exists." >&2
+  exit -1
+fi
+
 sudo docker run -d --privileged --network none --hostname ${CNAME} --name ${CNAME} -v /tmp/.X11-unix/:/tmp/.X11-unix -v /sys/fs/cgroup:/sys/fs/cgroup:ro ${INAME} /usr/bin/systemd
 #sudo docker exec ${CNAME} bash -c "echo export DISPLAY=$DISPLAY >> ~/.bashrc"
 
