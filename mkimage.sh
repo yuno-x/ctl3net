@@ -12,6 +12,7 @@ then
     sudo apt -y install docker-ce
   else
     echo "Install Canceled."
+    exit -1
   fi
 fi
 
@@ -57,7 +58,7 @@ sudo docker exec -it $CNAME apt update
 sudo docker exec -it $CNAME apt-file update
 sudo docker exec -it $CNAME bash -c 'yes no | apt -y install wireshark'
 sudo docker exec -it $CNAME bash -c 'yes | unminimize'
-sudo docker exec -it $CNAME apt -y install tmux vim htop hexedit iproute2 iputils-ping inetutils-traceroute curl nmap telnet tcpdump apt-file w3m x11-apps git build-essential python3 openjdk-16-jdk systemd man openssh-server openssh-client telnetd quagga apache2 php dsniff isc-dhcp-server mysql-server mysql-client
+sudo docker exec -it $CNAME apt -y install tmux vim htop hexedit iproute2 iputils-ping inetutils-traceroute curl nmap telnet tcpdump apt-file w3m x11-apps git build-essential python3 openjdk-16-jdk systemd avahi-daemon man openssh-server openssh-client telnetd quagga apache2 php dsniff isc-dhcp-server mysql-server mysql-client
 sudo docker exec $CNAME bash -c 'for FILE in `ls /usr/share/doc/quagga-core/examples/*.sample`; do cp $FILE /etc/quagga/$(basename -s .sample $FILE); done'
 sudo docker commit $CNAME $IMAGENAME
 sudo docker rm -f `sudo docker ps -aq`
